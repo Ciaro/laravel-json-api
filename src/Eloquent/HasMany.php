@@ -84,8 +84,7 @@ class HasMany extends AbstractManyRelation
 
         $existing = $relation
             ->getQuery()
-            ->whereKey($related->modelKeys())
-            ->get();
+            ->get([$relation->getRelated()->getForeignKey() . ' as id']);
 
         $relation->saveMany($related->diff($existing));
         $record->refresh(); // in case the relationship has been cached.
